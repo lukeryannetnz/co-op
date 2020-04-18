@@ -3,6 +3,9 @@ This is a game created as part of the Udemy course [Unreal Engine 4 Mastery: Cre
 
 To complete it ...
 
+Conventions: 
+* The 'S' prefix stands for shooter.
+
 To build:
 * Install UnrealEngine 4.24
 * Compile c++ and build unreal engine project
