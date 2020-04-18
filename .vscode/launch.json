@@ -1,0 +1,104 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "CoopGame (Debug)",
+			"request": "launch",
+			"preLaunchTask": "CoopGame Mac Debug Build",
+			"program": "/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Binaries/Mac/UE4-Mac-Debug.app/Contents/MacOS/UE4-Mac-Debug",
+			"args": [
+			],
+			"cwd": "/Users/Shared/Epic Games/UE_4.24",
+			"type": "lldb"
+		},
+		{
+			"name": "CoopGame (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "CoopGame Mac DebugGame Build",
+			"program": "/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Binaries/Mac/UE4-Mac-DebugGame.app/Contents/MacOS/UE4-Mac-DebugGame",
+			"args": [
+			],
+			"cwd": "/Users/Shared/Epic Games/UE_4.24",
+			"type": "lldb"
+		},
+		{
+			"name": "CoopGame (Development)",
+			"request": "launch",
+			"preLaunchTask": "CoopGame Mac Development Build",
+			"program": "/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Binaries/Mac/UE4.app/Contents/MacOS/UE4",
+			"args": [
+			],
+			"cwd": "/Users/Shared/Epic Games/UE_4.24",
+			"type": "lldb"
+		},
+		{
+			"name": "CoopGame (Shipping)",
+			"request": "launch",
+			"preLaunchTask": "CoopGame Mac Shipping Build",
+			"program": "/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Binaries/Mac/UE4-Mac-Shipping.app/Contents/MacOS/UE4-Mac-Shipping",
+			"args": [
+			],
+			"cwd": "/Users/Shared/Epic Games/UE_4.24",
+			"type": "lldb"
+		},
+		{
+			"name": "CoopGame (Test)",
+			"request": "launch",
+			"preLaunchTask": "CoopGame Mac Test Build",
+			"program": "/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Binaries/Mac/UE4-Mac-Test.app/Contents/MacOS/UE4-Mac-Test",
+			"args": [
+			],
+			"cwd": "/Users/Shared/Epic Games/UE_4.24",
+			"type": "lldb"
+		},
+		{
+			"name": "CoopGameEditor (Debug)",
+			"request": "launch",
+			"preLaunchTask": "CoopGameEditor Mac Debug Build",
+			"program": "/Users/Shared/Epic Games/UE_4.24/Engine/Binaries/Mac/UE4Editor-Mac-Debug.app/Contents/MacOS/UE4Editor-Mac-Debug",
+			"args": [
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject"
+			],
+			"cwd": "/Users/Shared/Epic Games/UE_4.24",
+			"type": "lldb"
+		},
+		{
+			"name": "CoopGameEditor (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "CoopGameEditor Mac DebugGame Build",
+			"program": "/Users/Shared/Epic Games/UE_4.24/Engine/Binaries/Mac/UE4Editor-Mac-DebugGame.app/Contents/MacOS/UE4Editor-Mac-DebugGame",
+			"args": [
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject"
+			],
+			"cwd": "/Users/Shared/Epic Games/UE_4.24",
+			"type": "lldb"
+		},
+		{
+			"name": "CoopGameEditor (Development)",
+			"request": "launch",
+			"preLaunchTask": "CoopGameEditor Mac Development Build",
+			"program": "/Users/Shared/Epic Games/UE_4.24/Engine/Binaries/Mac/UE4Editor.app/Contents/MacOS/UE4Editor",
+			"args": [
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject"
+			],
+			"cwd": "/Users/Shared/Epic Games/UE_4.24",
+			"type": "lldb"
+		},
+		{
+			"name": "Generate Project Files",
+			"type": "mono",
+			"request": "launch",
+			"program": "/Users/Shared/Epic Games/UE_4.24/Engine/Binaries/DotNET/UnrealBuildTool.exe",
+			"console": "internalConsole",
+			"args": [
+				"-projectfiles",
+				"-vscode",
+				"-project=\"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject\"",
+				"-game",
+				"-engine"
+			],
+			"internalConsoleOptions": "openOnSessionStart",
+			"cwd": "/Users/Shared/Epic Games/UE_4.24"
+		}
+	]
+}

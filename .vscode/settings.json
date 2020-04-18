@@ -1,0 +1,7 @@
+{
+	"files.exclude": {
+		"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/.vscode": true,
+		"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Content": true,
+		"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Intermediate": true
+	}
+}

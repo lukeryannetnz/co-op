@@ -1,0 +1,720 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "CoopGame Mac Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame Mac Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame Mac DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame Mac Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Shipping Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Shipping",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Shipping Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Shipping",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame Mac Shipping Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Shipping Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Shipping",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Test Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Test",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Test Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Test",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame Mac Test Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame Mac Test Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"Mac",
+				"Test",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame IOS Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame IOS DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame IOS Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Shipping Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Shipping",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Shipping Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Shipping",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame IOS Shipping Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Shipping Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Shipping",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Test Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Test",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Test Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Test",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGame IOS Test Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGame IOS Test Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGame",
+				"IOS",
+				"Test",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac Debug Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac Debug Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGameEditor Mac Debug Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac Debug Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"Debug",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac DebugGame Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac DebugGame Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGameEditor Mac DebugGame Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac DebugGame Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"DebugGame",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac Development Build",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac Development Rebuild",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"CoopGameEditor Mac Development Clean"
+			],
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		},
+		{
+			"label": "CoopGameEditor Mac Development Clean",
+			"group": "build",
+			"command": "Engine/Build/BatchFiles/Mac/Build.sh",
+			"args": [
+				"CoopGameEditor",
+				"Mac",
+				"Development",
+				"/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/CoopGame.uproject",
+				"-waitmutex",
+				"-clean"
+			],
+			"problemMatcher": "$msCompile",
+			"type": "shell",
+			"options": {
+				"cwd": "/Users/Shared/Epic Games/UE_4.24"
+			}
+		}
+	]
+}
