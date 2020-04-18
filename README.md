@@ -6,6 +6,9 @@ To complete it ...
 Conventions: 
 * The 'S' prefix stands for shooter.
 
+References:
+* Super useful overview of unreal abstractions http://www.tomlooman.com/ue4-gameplay-framework/
+
 To build:
 * Install UnrealEngine 4.24
 * Compile c++ and build unreal engine project
