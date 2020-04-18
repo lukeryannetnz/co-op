@@ -10,7 +10,9 @@
 		}
 	],
 	"settings": {
-		"typescript.tsc.autoDetect": "off"
+		"typescript.tsc.autoDetect": "off",
+		"C_Cpp.intelliSenseEngine": "Tag Parser",
+		"C_Cpp.intelliSenseEngineFallback": "Enabled"
 	},
 	"extensions": {
 		"recommendations": [
