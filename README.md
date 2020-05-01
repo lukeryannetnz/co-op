@@ -3,6 +3,8 @@ This is a game created as part of the Udemy course [Unreal Engine 4 Mastery: Cre
 
 To complete it ...
 
+![screenshot](co-op.png)
+
 Conventions: 
 * The 'S' prefix stands for shooter.
 
