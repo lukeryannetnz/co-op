@@ -46,6 +46,7 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAxis("Turn", this, &ASCharacter::AddControllerYawInput);
 	PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &ASCharacter::BeginCrouch);
 	PlayerInputComponent->BindAction("Crouch", IE_Released, this, &ASCharacter::EndCrouch);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASCharacter::BeginJump);
 }
 
 void ASCharacter::MoveForward(float Value)
@@ -66,4 +67,9 @@ void ASCharacter::BeginCrouch()
 void ASCharacter::EndCrouch()
 {
 	UnCrouch();
+}
+
+void ASCharacter::BeginJump()
+{
+	Jump();
 }

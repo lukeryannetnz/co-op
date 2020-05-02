@@ -44,4 +44,6 @@ protected:
 	void BeginCrouch();
 
 	void EndCrouch();
+
+	void BeginJump();
 };
