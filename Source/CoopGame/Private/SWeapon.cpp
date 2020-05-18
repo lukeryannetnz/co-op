@@ -28,3 +28,8 @@ void ASWeapon::Tick(float DeltaTime)
 
 }
 
+void ASWeapon::Fire()
+{
+	AActor* owner = GetOwner();
+}
+
