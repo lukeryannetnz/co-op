@@ -53,7 +53,7 @@ void ASWeapon::Fire()
 		FHitResult Hit;
 		if(GetWorld()->LineTraceSingleByChannel(Hit, EyesLocation, TraceEnd, ECC_Visibility, QueryParams))
 		{
-			UGameplayStatics::ApplyPointDamage(Hit->GetActor(), 20.0f, ShotDirection, Hit, Owner->GetInstigatorController(), this, )
+			UGameplayStatics::ApplyPointDamage(Hit->GetActor(), 20.0f, ShotDirection, Hit, Owner->GetInstigatorController(), this, DamageType);
 		}
 
 		DrawDebugLine(GetWorld(), EyesLocation, TraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
