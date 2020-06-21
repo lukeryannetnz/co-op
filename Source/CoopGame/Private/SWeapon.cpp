@@ -39,54 +39,56 @@ void ASWeapon::Fire()
 {
 	AActor* Owner = GetOwner();
 
-	if(Owner)
+	if(!Owner)
 	{
-		FVector EyesLocation;
-		FRotator EyesRotation;
-		Owner->GetActorEyesViewPoint(EyesLocation, EyesRotation);
-		FVector ShotDirection = EyesRotation.Vector();
-
-		// trace from the eyes to a point in the distance, caluclated by taking the direction 
-		// of gaze (rotation) and multipling it by a large constant
-		FVector LineTraceEnd = EyesLocation + (ShotDirection * 10000);
-
-		FVector TracerEndPoint = LineTraceEnd;
-
-		FCollisionQueryParams QueryParams;
-		QueryParams.AddIgnoredActor(Owner);
-		QueryParams.AddIgnoredActor(this);
-		QueryParams.bTraceComplex = true;
-
-		FHitResult Hit;
-		if(GetWorld()->LineTraceSingleByChannel(Hit, EyesLocation, LineTraceEnd, ECC_Visibility, QueryParams))
-		{
-			UGameplayStatics::ApplyPointDamage(Hit.GetActor(), 20.0f, ShotDirection, Hit, Owner->GetInstigatorController(), this, DamageType);
-
-			if(ImpactEffect)
-			{
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
-			}
-
-			TracerEndPoint = Hit.ImpactPoint;
-		}
-
-		if(MuzzleEffect)
-		{
-			UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, MeshComponent, MuzzleSocketName);
-		}
-
-		if(TracerEffect)
-		{
-			FVector MuzzleLocation = MeshComponent->GetSocketLocation(MuzzleSocketName);
-
-			UParticleSystemComponent* TracerComponent = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TracerEffect, MuzzleLocation);
-			if(TracerComponent)
-			{
-				TracerComponent->SetVectorParameter(TracerTargetName, TracerEndPoint);
-			}
-		}
-
-		DrawDebugLine(GetWorld(), EyesLocation, LineTraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
+		return;
 	}
+
+	FVector EyesLocation;
+	FRotator EyesRotation;
+	Owner->GetActorEyesViewPoint(EyesLocation, EyesRotation);
+	FVector ShotDirection = EyesRotation.Vector();
+
+	// trace from the eyes to a point in the distance, caluclated by taking the direction 
+	// of gaze (rotation) and multipling it by a large constant
+	FVector LineTraceEnd = EyesLocation + (ShotDirection * 10000);
+
+	FVector TracerEndPoint = LineTraceEnd;
+
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(Owner);
+	QueryParams.AddIgnoredActor(this);
+	QueryParams.bTraceComplex = true;
+
+	FHitResult Hit;
+	if(GetWorld()->LineTraceSingleByChannel(Hit, EyesLocation, LineTraceEnd, ECC_Visibility, QueryParams))
+	{
+		UGameplayStatics::ApplyPointDamage(Hit.GetActor(), 20.0f, ShotDirection, Hit, Owner->GetInstigatorController(), this, DamageType);
+
+		if(ImpactEffect)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+		}
+
+		TracerEndPoint = Hit.ImpactPoint;
+	}
+
+	if(MuzzleEffect)
+	{
+		UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, MeshComponent, MuzzleSocketName);
+	}
+
+	if(TracerEffect)
+	{
+		FVector MuzzleLocation = MeshComponent->GetSocketLocation(MuzzleSocketName);
+
+		UParticleSystemComponent* TracerComponent = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TracerEffect, MuzzleLocation);
+		if(TracerComponent)
+		{
+			TracerComponent->SetVectorParameter(TracerTargetName, TracerEndPoint);
+		}
+	}
+
+	DrawDebugLine(GetWorld(), EyesLocation, LineTraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
 }
 
