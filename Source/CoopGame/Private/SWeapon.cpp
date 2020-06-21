@@ -6,6 +6,7 @@
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 ASWeapon::ASWeapon()
@@ -17,6 +18,7 @@ ASWeapon::ASWeapon()
 	RootComponent = MeshComponent;
 
 	MuzzleSocketName = "MuzzleSocket";
+	TracerTargetName = "Target";
 }
 
 // Called when the game starts or when spawned
@@ -46,7 +48,9 @@ void ASWeapon::Fire()
 
 		// trace from the eyes to a point in the distance, caluclated by taking the direction 
 		// of gaze (rotation) and multipling it by a large constant
-		FVector TraceEnd = EyesLocation + (ShotDirection * 10000);
+		FVector LineTraceEnd = EyesLocation + (ShotDirection * 10000);
+
+		FVector TracerEndPoint = LineTraceEnd;
 
 		FCollisionQueryParams QueryParams;
 		QueryParams.AddIgnoredActor(Owner);
@@ -54,7 +58,7 @@ void ASWeapon::Fire()
 		QueryParams.bTraceComplex = true;
 
 		FHitResult Hit;
-		if(GetWorld()->LineTraceSingleByChannel(Hit, EyesLocation, TraceEnd, ECC_Visibility, QueryParams))
+		if(GetWorld()->LineTraceSingleByChannel(Hit, EyesLocation, LineTraceEnd, ECC_Visibility, QueryParams))
 		{
 			UGameplayStatics::ApplyPointDamage(Hit.GetActor(), 20.0f, ShotDirection, Hit, Owner->GetInstigatorController(), this, DamageType);
 
@@ -62,6 +66,8 @@ void ASWeapon::Fire()
 			{
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
 			}
+
+			TracerEndPoint = Hit.ImpactPoint;
 		}
 
 		if(MuzzleEffect)
@@ -69,7 +75,18 @@ void ASWeapon::Fire()
 			UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, MeshComponent, MuzzleSocketName);
 		}
 
-		DrawDebugLine(GetWorld(), EyesLocation, TraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
+		if(TracerEffect)
+		{
+			FVector MuzzleLocation = MeshComponent->GetSocketLocation(MuzzleSocketName);
+
+			UParticleSystemComponent* TracerComponent = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TracerEffect, MuzzleLocation);
+			if(TracerComponent)
+			{
+				TracerComponent->SetVectorParameter(TracerTargetName, TracerEndPoint);
+			}
+		}
+
+		DrawDebugLine(GetWorld(), EyesLocation, LineTraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
 	}
 }
 
