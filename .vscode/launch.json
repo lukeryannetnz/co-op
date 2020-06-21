@@ -1,6 +1,7 @@
 {
 	"version": "0.2.0",
 	"configurations": [
+		
 		{
 			"name": "CoopGame (Debug)",
 			"request": "launch",
@@ -15,7 +16,7 @@
 			"name": "CoopGame (DebugGame)",
 			"request": "launch",
 			"preLaunchTask": "CoopGame Mac DebugGame Build",
-			"program": "/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Binaries/Mac/UE4-Mac-DebugGame.app/Contents/MacOS/UE4-Mac-DebugGame",
+			"program": "/Users/lukeryan/Dropbox/Luke Documents/dev/unreal-projects/CoopGame/Binaries/Mac/CoopGame-Mac-DebugGame.app/Contents/MacOS/CoopGame-Mac-DebugGame",
 			"args": [
 			],
 			"cwd": "/Users/Shared/Epic Games/UE_4.24",
