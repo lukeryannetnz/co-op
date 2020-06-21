@@ -49,6 +49,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	UParticleSystem* TracerEffect;
 
+private:
+
+	void ApplyImpactEvent(FHitResult Hit);
+
+	void ApplyMuzzleEffect();
+
+	void ApplyTracerEffect(FVector TracerEndPoint);
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

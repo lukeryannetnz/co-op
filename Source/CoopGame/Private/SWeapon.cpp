@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "SWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "DrawDebugHelpers.h"
@@ -52,7 +49,6 @@ void ASWeapon::Fire()
 	// trace from the eyes to a point in the distance, caluclated by taking the direction 
 	// of gaze (rotation) and multipling it by a large constant
 	FVector LineTraceEnd = EyesLocation + (ShotDirection * 10000);
-
 	FVector TracerEndPoint = LineTraceEnd;
 
 	FCollisionQueryParams QueryParams;
@@ -65,19 +61,34 @@ void ASWeapon::Fire()
 	{
 		UGameplayStatics::ApplyPointDamage(Hit.GetActor(), 20.0f, ShotDirection, Hit, Owner->GetInstigatorController(), this, DamageType);
 
-		if(ImpactEffect)
-		{
-			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
-		}
+		ApplyImpactEvent(Hit);
 
 		TracerEndPoint = Hit.ImpactPoint;
 	}
 
+	ApplyMuzzleEffect();
+	ApplyTracerEffect(TracerEndPoint);
+	DrawDebugLine(GetWorld(), EyesLocation, LineTraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
+}
+
+void ASWeapon::ApplyImpactEvent(FHitResult Hit)
+{
+	if(ImpactEffect)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+	}
+}
+
+void ASWeapon::ApplyMuzzleEffect()
+{
 	if(MuzzleEffect)
 	{
 		UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, MeshComponent, MuzzleSocketName);
 	}
+}
 
+void ASWeapon::ApplyTracerEffect(FVector TracerEndPoint)
+{
 	if(TracerEffect)
 	{
 		FVector MuzzleLocation = MeshComponent->GetSocketLocation(MuzzleSocketName);
@@ -88,7 +99,4 @@ void ASWeapon::Fire()
 			TracerComponent->SetVectorParameter(TracerTargetName, TracerEndPoint);
 		}
 	}
-
-	DrawDebugLine(GetWorld(), EyesLocation, LineTraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
 }
-
