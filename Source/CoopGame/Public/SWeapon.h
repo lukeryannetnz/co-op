@@ -8,6 +8,7 @@
 
 class USkeletalMeshComponent;
 class UDamageType;
+class UParticalSystem;
 
 UCLASS()
 class COOPGAME_API ASWeapon : public AActor
@@ -17,6 +18,8 @@ class COOPGAME_API ASWeapon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ASWeapon();
+
+	
 
 protected:
 	// Called when the game starts or when spawned
@@ -30,6 +33,15 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	TSubclassOf<UDamageType> DamageType;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	FName MuzzleSocketName;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	UParticleSystem* MuzzleEffect;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	UParticleSystem* ImpactEffect;
 
 public:	
 	// Called every frame
