@@ -14,4 +14,7 @@ class COOPGAME_API ASProjectileWeapon : public ASWeapon
 {
 	GENERATED_BODY()
 	
+protected:
+
+	virtual void Fire();
 };

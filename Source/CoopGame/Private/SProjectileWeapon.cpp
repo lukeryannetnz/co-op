@@ -3,3 +3,7 @@
 
 #include "SProjectileWeapon.h"
 
+void ASProjectileWeapon::Fire()
+{
+    //project projectile actor who explodes and causes damage to all around after 2 seconds
+}
