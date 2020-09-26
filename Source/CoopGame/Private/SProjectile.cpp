@@ -22,6 +22,8 @@ void ASProjectile::BeginPlay()
 void ASProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	// explode after 2 seconds
+	// apply radial damage to all actors within a radius
 
 }
 
