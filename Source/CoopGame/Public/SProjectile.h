@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "SProjectile.generated.h"
 
+class USphereComponent;
+class UProjectileMovementComponent;
+
 UCLASS()
 class COOPGAME_API ASProjectile : public AActor
 {
@@ -18,6 +21,13 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile")
+    USphereComponent * CollisionComp;
+
+	/** Projectile movement component */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
+    UProjectileMovementComponent * ProjectileMovement;
 
 public:	
 	// Called every frame

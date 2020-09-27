@@ -6,6 +6,8 @@
 #include "SWeapon.h"
 #include "SProjectileWeapon.generated.h"
 
+class ASProjectile;
+
 /**
  * 
  */
@@ -15,6 +17,10 @@ class COOPGAME_API ASProjectileWeapon : public ASWeapon
 	GENERATED_BODY()
 	
 protected:
+
+	/** Projectile class to spawn */
+    UPROPERTY(EditDefaultsOnly, Category = "Projectile")
+    TSubclassOf<ASProjectile> ProjectileClass;
 
 	virtual void Fire();
 };
