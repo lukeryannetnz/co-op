@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+struct FTimerHandle;
 
 UCLASS()
 class COOPGAME_API ASProjectile : public AActor
@@ -22,6 +23,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void Destruct();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile")
     USphereComponent * CollisionComp;
 
@@ -29,8 +32,7 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
     UProjectileMovementComponent * ProjectileMovement;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+private:	
+	
+	FTimerHandle MemberTimerHandle;
 };

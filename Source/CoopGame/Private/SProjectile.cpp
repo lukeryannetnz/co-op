@@ -4,13 +4,12 @@
 #include "SProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
+#include "TimerManager.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values
-ASProjectile::ASProjectile()
+ASProjectile::ASProjectile() : AActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
     CollisionComp -> InitSphereRadius(5.0f);
     CollisionComp -> SetCollisionProfileName("Projectile");
@@ -20,8 +19,8 @@ ASProjectile::ASProjectile()
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
     ProjectileMovement -> UpdatedComponent = CollisionComp;
-    ProjectileMovement -> InitialSpeed = 3000.0f;
-    ProjectileMovement -> MaxSpeed = 3000.0f;
+    ProjectileMovement -> InitialSpeed = 1000.0f;
+    ProjectileMovement -> MaxSpeed = 1000.0f;
     ProjectileMovement -> bRotationFollowsVelocity = true;
     ProjectileMovement -> bShouldBounce = true;
 }
@@ -29,16 +28,31 @@ ASProjectile::ASProjectile()
 // Called when the game starts or when spawned
 void ASProjectile::BeginPlay()
 {
+	AActor* Owner = GetOwner();
+	if(Owner != NULL)
+	{
+		UWorld* World = Owner->GetWorld();
+		if(World != NULL)
+		{
+			World->GetTimerManager().SetTimer(MemberTimerHandle, this, &ASProjectile::Destruct, 1.5f, false, 1.5f);
+		}
+	}
+
 	Super::BeginPlay();
-	
 }
 
-// Called every frame
-void ASProjectile::Tick(float DeltaTime)
+void ASProjectile::Destruct()
 {
-	Super::Tick(DeltaTime);
-	// explode after 2 seconds
-	// apply radial damage to all actors within a radius
-
+	AActor* Owner = GetOwner(); 
+	if(Owner != NULL)
+	{
+		UWorld* World = Owner->GetWorld();
+		if(World != NULL)
+		{
+			World->GetTimerManager().ClearTimer(MemberTimerHandle);
+		}
+	}
+	//todo animation
+	//todo apply radial damage to all actors within a radius
+	Destroy(true, true);
 }
-

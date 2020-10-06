@@ -16,6 +16,7 @@ void ASProjectileWeapon::Fire()
     FActorSpawnParameters ActorSpawnParams;
     ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
     ActorSpawnParams.Instigator = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+    ActorSpawnParams.Owner = this;
 
         // spawn the projectile at the muzzle
     GetWorld()->SpawnActor<ASProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, ActorSpawnParams);
