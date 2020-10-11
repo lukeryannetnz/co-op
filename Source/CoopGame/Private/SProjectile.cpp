@@ -6,6 +6,7 @@
 #include "Components/SphereComponent.h"
 #include "TimerManager.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ASProjectile::ASProjectile() : AActor()
@@ -34,7 +35,7 @@ void ASProjectile::BeginPlay()
 		UWorld* World = Owner->GetWorld();
 		if(World != NULL)
 		{
-			World->GetTimerManager().SetTimer(MemberTimerHandle, this, &ASProjectile::Destruct, 1.5f, false, 1.5f);
+			World->GetTimerManager().SetTimer(MemberTimerHandle, this, &ASProjectile::Destruct, 1.0f, false, 1.0f);
 		}
 	}
 
@@ -50,10 +51,16 @@ void ASProjectile::Destruct()
 		if(World != NULL)
 		{
 			World->GetTimerManager().ClearTimer(MemberTimerHandle);
+
+			if(ExplosionEffect)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(World, ExplosionEffect, FTransform(CollisionComp->GetComponentLocation()));
+			}
 		}
 	}
 	//todo animation
 	//todo apply radial damage to all actors within a radius
-	// PlayAnimation()
+	
+
 	Destroy(true, true);
 }
