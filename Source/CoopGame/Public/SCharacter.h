@@ -16,6 +16,14 @@ public:
 	// Sets default values for this character's properties
 	ASCharacter();
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual FVector GetPawnViewLocation() const override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -26,17 +34,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USpringArmComponent* SpringArmComp;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	virtual FVector GetPawnViewLocation() const override;
-
-protected:
-
 	void MoveForward(float Value);
 
 	void MoveRight (float Value);
@@ -46,4 +43,19 @@ protected:
 	void EndCrouch();
 
 	void BeginJump();
+
+	float DefaultFOV;
+
+	float ZoomedFOV;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player", meta=(ClampMin=0.1, ClampMax=100))
+	float ZoomInterpSpeed;
+
+	void BeginZoom();
+
+	void EndZoom();
+
+private:
+
+	bool bWantsToZoom;
 };
