@@ -54,5 +54,6 @@ void ASProjectile::Destruct()
 	}
 	//todo animation
 	//todo apply radial damage to all actors within a radius
+	// PlayAnimation()
 	Destroy(true, true);
 }

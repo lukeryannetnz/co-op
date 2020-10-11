@@ -22,5 +22,8 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Projectile")
     TSubclassOf<ASProjectile> ProjectileClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
+	UParticleSystem* ExplosionEffect;
+
 	virtual void Fire();
 };
