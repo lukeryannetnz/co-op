@@ -1,12 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "SProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 #include "TimerManager.h"
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/EngineTypes.h"
 
 // Sets default values
 ASProjectile::ASProjectile() : AActor()
@@ -52,15 +50,20 @@ void ASProjectile::Destruct()
 		{
 			World->GetTimerManager().ClearTimer(MemberTimerHandle);
 
+			FVector location = CollisionComp->GetComponentLocation();
 			if(ExplosionEffect)
 			{
-				UGameplayStatics::SpawnEmitterAtLocation(World, ExplosionEffect, FTransform(CollisionComp->GetComponentLocation()));
+				UGameplayStatics::SpawnEmitterAtLocation(World, ExplosionEffect, FTransform(location));
+			}
+			const TArray<AActor*> ignores;
+			bool damageApplied = UGameplayStatics::ApplyRadialDamage(World, 20.0f, location, 250.0f, UDamageType::StaticClass(), ignores, this);
+
+			if(damageApplied)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("ASProjectile: Damage applied."));
 			}
 		}
 	}
-	//todo animation
-	//todo apply radial damage to all actors within a radius
-	
 
 	Destroy(true, true);
 }

@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -18,8 +16,6 @@ class COOPGAME_API ASWeapon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ASWeapon();
-
-	
 
 protected:
 	// Called when the game starts or when spawned
@@ -56,7 +52,6 @@ private:
 	void ApplyMuzzleEffect();
 
 	void ApplyTracerEffect(FVector TracerEndPoint);
-
 
 public:	
 	// Called every frame

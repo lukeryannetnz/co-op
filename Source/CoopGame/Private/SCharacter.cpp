@@ -19,7 +19,6 @@ ASCharacter::ASCharacter()
 
 	// this enables the character to crouch in unreal engine. Very odd location for this setting!
 	GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
-
 }
 
 // Called when the game starts or when spawned
@@ -32,7 +31,6 @@ void ASCharacter::BeginPlay()
 void ASCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input

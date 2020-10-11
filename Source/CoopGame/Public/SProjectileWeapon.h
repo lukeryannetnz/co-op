@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -9,7 +7,7 @@
 class ASProjectile;
 
 /**
- * 
+ * Weapon whicb shoots projectiles which cause damage. 
  */
 UCLASS()
 class COOPGAME_API ASProjectileWeapon : public ASWeapon
