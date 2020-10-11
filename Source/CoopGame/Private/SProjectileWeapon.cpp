@@ -27,6 +27,6 @@ void ASProjectileWeapon::Fire()
     if(projectile)
     {
         projectile->ExplosionEffect = this->ExplosionEffect;
-        UGameplayStatics::FinishSpawningActor(projectile, FTransform(MuzzleRotation, MuzzleLocation));
+        UGameplayStatics::FinishSpawningActor(projectile, FTransform(EyeRotation, MuzzleLocation));
     }
 }
