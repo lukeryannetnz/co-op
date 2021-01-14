@@ -26,3 +26,6 @@ This will boot the game in the editor with the visual debugger attached.
 
 ### Super helpful unreal editor shortcuts
 * ~ open console
+
+### Won't compile on Big Sur?
+Try patching this: https://github.com/EpicGames/UnrealEngine/commit/1d252ee345cdf6c232b20c3b4bf14f13bb569c9d
