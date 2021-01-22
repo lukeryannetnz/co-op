@@ -52,7 +52,7 @@ void ASWeapon::Fire()
 	QueryParams.bReturnPhysicalMaterial = true;
 
 	FHitResult Hit;
-	if(GetWorld()->LineTraceSingleByChannel(Hit, EyesLocation, LineTraceEnd, ECC_Visibility, QueryParams))
+	if(GetWorld()->LineTraceSingleByChannel(Hit, EyesLocation, LineTraceEnd, COLLISION_WEAPON, QueryParams))
 	{
 		UGameplayStatics::ApplyPointDamage(Hit.GetActor(), 20.0f, ShotDirection, Hit, Owner->GetInstigatorController(), this, DamageType);
 
