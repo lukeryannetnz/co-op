@@ -60,6 +60,7 @@ void ASWeapon::Fire()
 
 	ApplyMuzzleEffect();
 	ApplyTracerEffect(TracerEndPoint);
+	ApplyCameraShake();
 	
 	if(DebugWeaponDrawing > 0) {
 		DrawDebugLine(GetWorld(), EyesLocation, LineTraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
@@ -92,6 +93,21 @@ void ASWeapon::ApplyTracerEffect(FVector TracerEndPoint)
 		if(TracerComponent)
 		{
 			TracerComponent->SetVectorParameter(TracerTargetName, TracerEndPoint);
+		}
+	}
+}
+
+void ASWeapon::ApplyCameraShake()
+{
+	APawn* MyOwner = Cast<APawn>(GetOwner());
+
+	if(MyOwner)
+	{
+		APlayerController* PC = Cast<APlayerController>(MyOwner->GetController());
+
+		if(PC)
+		{
+			PC->ClientPlayCameraShake(FireCamShake);
 		}
 	}
 }

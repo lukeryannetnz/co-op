@@ -43,6 +43,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	UParticleSystem* TracerEffect;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	TSubclassOf<UCameraShake> FireCamShake;
+
 private:
 
 	void ApplyImpactEvent(FHitResult Hit);
@@ -50,5 +53,7 @@ private:
 	void ApplyMuzzleEffect();
 
 	void ApplyTracerEffect(FVector TracerEndPoint);
+
+	void ApplyCameraShake();
 
 };
