@@ -19,7 +19,6 @@ FAutoConsoleVariableRef CVarDebugWeaponDrawing(
 // Sets default values
 ASWeapon::ASWeapon()
 {
-
 	MeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComp"));
 	RootComponent = MeshComponent;
 
@@ -28,6 +27,8 @@ ASWeapon::ASWeapon()
 
 	BaseDamage = 20.0f;
 	RateOfFire = 600;
+
+	RemainingAmmunitionCount = 25; 
 }
 
 void ASWeapon::BeginPlay()
@@ -59,6 +60,15 @@ void ASWeapon::Fire()
 	{
 		return;
 	}
+
+	if(RemainingAmmunitionCount <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Out of ammo!"));
+		return;
+	}
+
+	RemainingAmmunitionCount--;
+	UE_LOG(LogTemp, Warning, TEXT("Remaining ammo: %i"), RemainingAmmunitionCount);
 
 	FVector EyesLocation;
 	FRotator EyesRotation;

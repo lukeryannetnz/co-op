@@ -26,6 +26,12 @@ public:
 	/* Bullets per minute */
 	float RateOfFire;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	int RemainingAmmunitionCount;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	int InitialAmmunitionCount;
+
 protected:
 
 	virtual void BeginPlay() override;
