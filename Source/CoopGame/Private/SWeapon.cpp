@@ -6,6 +6,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "../CoopGame.h"
+#include "TimerManager.h"
 
 static int32 DebugWeaponDrawing = 0;
 FAutoConsoleVariableRef CVarDebugWeaponDrawing(
@@ -26,7 +27,29 @@ ASWeapon::ASWeapon()
 	TracerTargetName = "Target";
 
 	BaseDamage = 20.0f;
+	RateOfFire = 600;
 }
+
+void ASWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+
+	TimeBetweenShots = 60 / RateOfFire;
+}
+
+void ASWeapon::StartFire()
+{
+	float FirstDelay = FMath::Max(LastFireTime + TimeBetweenShots - GetWorld()->GetTimeSeconds(), 0.0f);
+	GetWorldTimerManager().SetTimer(TimerHandle_TimeBetweenShots, this, &ASWeapon::Fire, TimeBetweenShots, true), FirstDelay;
+
+	Fire();
+}
+	
+void ASWeapon::StopFire()
+{
+	GetWorldTimerManager().ClearTimer(TimerHandle_TimeBetweenShots);
+}
+
 
 void ASWeapon::Fire()
 {
@@ -79,6 +102,8 @@ void ASWeapon::Fire()
 	if(DebugWeaponDrawing > 0) {
 		DrawDebugLine(GetWorld(), EyesLocation, LineTraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
 	}
+
+	LastFireTime = GetWorld()->GetTimeSeconds();
 }
 
 void ASWeapon::ApplyImpactEvent(FHitResult Hit, EPhysicalSurface Surface)

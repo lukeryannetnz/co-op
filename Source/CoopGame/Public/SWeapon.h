@@ -17,10 +17,20 @@ public:
 	// Sets default values for this actor's properties
 	ASWeapon();
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	virtual void Fire();
+	//UFUNCTION(BlueprintCallable, Category = "Weapon")
+
+	void StartFire();
+	
+	void StopFire();
+
+	/* Bullets per minute */
+	float RateOfFire;
 
 protected:
+
+	virtual void BeginPlay() override;
+
+	virtual void Fire();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USkeletalMeshComponent* MeshComponent;
@@ -56,6 +66,11 @@ protected:
 
 private:
 
+	/* Calculated from RateOfFire */
+	float TimeBetweenShots;
+
+	float LastFireTime;
+
 	void ApplyImpactEvent(FHitResult Hit, EPhysicalSurface Surface);
 
 	void ApplyMuzzleEffect();
@@ -63,5 +78,7 @@ private:
 	void ApplyTracerEffect(FVector TracerEndPoint);
 
 	void ApplyCameraShake();
+
+	FTimerHandle TimerHandle_TimeBetweenShots;
 
 };
