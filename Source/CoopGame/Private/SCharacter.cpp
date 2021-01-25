@@ -3,6 +3,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "SWeapon.h"
+#include "Components/CapsuleComponent.h"
+#include "../CoopGame.h"
 
 
 // Sets default values
@@ -21,6 +23,7 @@ ASCharacter::ASCharacter()
 
 	// this enables the character to crouch in unreal engine. Very odd location for this setting!
 	GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
+	GetCapsuleComponent()->SetCollisionResponseToChannel(COLLISION_WEAPON, ECR_Ignore);
 
 	WeaponAttachSocketName = "WeaponSocket";
 }

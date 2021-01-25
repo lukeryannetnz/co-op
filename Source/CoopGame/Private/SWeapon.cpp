@@ -68,7 +68,7 @@ void ASWeapon::Fire()
 	}
 
 	RemainingAmmunitionCount--;
-	UE_LOG(LogTemp, Warning, TEXT("Remaining ammo: %i"), RemainingAmmunitionCount);
+	UE_LOG(LogTemp, Log, TEXT("Remaining ammo: %i"), RemainingAmmunitionCount);
 
 	FVector EyesLocation;
 	FRotator EyesRotation;
@@ -99,7 +99,7 @@ void ASWeapon::Fire()
 		}
 
 		UGameplayStatics::ApplyPointDamage(Hit.GetActor(), ActualDamage, ShotDirection, Hit, Owner->GetInstigatorController(), this, DamageType);
-		UE_LOG(LogTemp, Warning, TEXT("Damage applied: %f"), ActualDamage);
+		UE_LOG(LogTemp, Log, TEXT("Damage applied: %f"), ActualDamage);
 		ApplyImpactEvent(Hit, Surface);
 
 		TracerEndPoint = Hit.ImpactPoint;
