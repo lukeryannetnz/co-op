@@ -5,11 +5,14 @@
 #include "SWeapon.h"
 #include "Components/CapsuleComponent.h"
 #include "../CoopGame.h"
+#include "SHealthComponent.h"
 
 
 // Sets default values
 ASCharacter::ASCharacter()
 {
+	bDied = false;
+
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -20,6 +23,9 @@ ASCharacter::ASCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(SpringArmComp);
+
+	HealthComponent = CreateDefaultSubobject<USHealthComponent>(TEXT("HealthComponent"));
+	HealthComponent->OnHealthChanged.AddDynamic(this, &ASCharacter::HandleHealthChanged);
 
 	// this enables the character to crouch in unreal engine. Very odd location for this setting!
 	GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
@@ -139,5 +145,18 @@ void ASCharacter::StopFire()
 	if(CurrentWeapon)
 	{
 		CurrentWeapon->StopFire();
+	}
+}
+
+void ASCharacter::HandleHealthChanged(USHealthComponent* SourceHealthComponent, float Health, float HealthDelta)
+{
+	if(Health <= 0.0f)
+	{
+		// die!
+		bDied = true;
+
+		GetMovementComponent()->StopMovementImmediately();
+
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 }

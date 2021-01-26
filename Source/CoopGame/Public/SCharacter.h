@@ -7,6 +7,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class ASWeapon;
+class USHealthComponent;
 
 UCLASS()
 class COOPGAME_API ASCharacter : public ACharacter
@@ -26,6 +27,9 @@ public:
 	virtual FVector GetPawnViewLocation() const override;
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player")
+	bool bDied;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -36,6 +40,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USpringArmComponent* SpringArmComp;
+
+	USHealthComponent* HealthComponent;
 
 	void MoveForward(float Value);
 
@@ -68,7 +74,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Player")
 	TSubclassOf<ASWeapon> StarterWeaponClass;
 
+	UFUNCTION()
+	void HandleHealthChanged(USHealthComponent* HealthComp, float Health, float HealthDelta);
+
 private:
 
 	bool bWantsToZoom;
+
 };

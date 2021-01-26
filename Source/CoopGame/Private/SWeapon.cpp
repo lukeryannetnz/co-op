@@ -28,7 +28,7 @@ ASWeapon::ASWeapon()
 	BaseDamage = 20.0f;
 	RateOfFire = 600;
 
-	RemainingAmmunitionCount = 25; 
+	RemainingAmmunitionCount = 250; 
 }
 
 void ASWeapon::BeginPlay()
