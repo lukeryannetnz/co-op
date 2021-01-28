@@ -30,7 +30,7 @@ public:
 	ASWeapon* CurrentWeapon;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Player")
 	bool bDied;
 
 	// Called when the game starts or when spawned
