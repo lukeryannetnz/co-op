@@ -55,6 +55,11 @@ void ASWeapon::StopFire()
 
 void ASWeapon::Fire()
 {
+	if(Role < ROLE_Authority)
+	{
+		ServerFire();
+	}
+
 	AActor* Owner = GetOwner();
 
 	if(!Owner)
@@ -115,6 +120,16 @@ void ASWeapon::Fire()
 	}
 
 	LastFireTime = GetWorld()->GetTimeSeconds();
+}
+
+void ASWeapon::ServerFire_Implementation()
+{
+	Fire();
+}
+
+bool ASWeapon::ServerFire_Validate()
+{
+	return true;
 }
 
 void ASWeapon::ApplyImpactEvent(FHitResult Hit, EPhysicalSurface Surface)
