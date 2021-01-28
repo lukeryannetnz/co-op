@@ -15,7 +15,7 @@ struct FHitScanTrace
 
 public:
 	UPROPERTY()
-	FVector_NetQuantize TraceFrom;
+	TEnumAsByte<EPhysicalSurface> SurfaceType;
 	
 	UPROPERTY()
 	FVector_NetQuantize TraceTo;
@@ -100,7 +100,7 @@ private:
 
 	float LastFireTime;
 
-	void ApplyImpactEvent(FHitResult Hit, EPhysicalSurface Surface);
+	void ApplyImpactEvent(FVector ImpactPoint, EPhysicalSurface Surface);
 
 	void ApplyMuzzleEffect();
 

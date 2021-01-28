@@ -43,7 +43,7 @@ void ASCharacter::BeginPlay()
 	ZoomedFOV = DefaultFOV - 30;
 	ZoomInterpSpeed = 15;
 
-	if(Role == ROLE_Authority)
+	if(GetLocalRole() == ROLE_Authority)
 	{
 		// Spawn a default weapon
 		FActorSpawnParameters SpawnParams;
