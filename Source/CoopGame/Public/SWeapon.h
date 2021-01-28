@@ -8,6 +8,20 @@ class USkeletalMeshComponent;
 class UDamageType;
 class UParticalSystem;
 
+USTRUCT()
+struct FHitScanTrace
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	FVector_NetQuantize TraceFrom;
+	
+	UPROPERTY()
+	FVector_NetQuantize TraceTo;
+
+};
+
 UCLASS()
 class COOPGAME_API ASWeapon : public AActor
 {
@@ -72,6 +86,12 @@ protected:
 	float BaseDamage;
 
 	float ActualDamage;
+
+	UPROPERTY(ReplicatedUsing=OnRep_HitScanTrace)
+	FHitScanTrace HitScanTrace;
+
+	UFUNCTION()
+	void OnRep_HitScanTrace();
 
 private:
 

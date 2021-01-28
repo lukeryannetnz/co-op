@@ -7,6 +7,7 @@
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "../CoopGame.h"
 #include "TimerManager.h"
+#include "Net/UnrealNetwork.h"
 
 static int32 DebugWeaponDrawing = 0;
 FAutoConsoleVariableRef CVarDebugWeaponDrawing(
@@ -119,6 +120,11 @@ void ASWeapon::Fire()
 		DrawDebugLine(GetWorld(), EyesLocation, LineTraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
 	}
 
+	if(Role == ROLE_Authority)
+	{
+		HitScanTrace.TraceTo = TracerEndPoint;
+	}
+
 	LastFireTime = GetWorld()->GetTimeSeconds();
 }
 
@@ -188,4 +194,18 @@ void ASWeapon::ApplyCameraShake()
 			PC->ClientPlayCameraShake(FireCamShake);
 		}
 	}
+}
+
+void ASWeapon::OnRep_HitScanTrace()
+{
+	ApplyMuzzleEffect();
+	ApplyTracerEffect(HitScanTrace.TraceTo);
+}
+
+void ASWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	// Don't replicate back to owner as it has already played the fire animations.
+	DOREPLIFETIME_CONDITION(ASWeapon, HitScanTrace, COND_SkipOwner);
 }
