@@ -28,7 +28,9 @@ ASWeapon::ASWeapon()
 	BaseDamage = 20.0f;
 	RateOfFire = 600;
 
-	RemainingAmmunitionCount = 250; 
+	RemainingAmmunitionCount = 250;
+
+	SetReplicates(true); 
 }
 
 void ASWeapon::BeginPlay()
@@ -50,7 +52,6 @@ void ASWeapon::StopFire()
 {
 	GetWorldTimerManager().ClearTimer(TimerHandle_TimeBetweenShots);
 }
-
 
 void ASWeapon::Fire()
 {
