@@ -4,6 +4,7 @@
 #include "Runtime/NavigationSystem/Public/NavigationPath.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
+#include "SHealthComponent.h"
 
 // Sets default values
 ASTrackerBot::ASTrackerBot()
@@ -15,6 +16,9 @@ ASTrackerBot::ASTrackerBot()
 	MeshComp->SetCanEverAffectNavigation(false);
 	MeshComp->SetSimulatePhysics(true);
 	RootComponent = MeshComp;
+
+	HealthComp = CreateDefaultSubobject<USHealthComponent>(TEXT("HealthComp"));
+	HealthComp->OnHealthChanged.AddDynamic(this, &ASTrackerBot::HandleTakeDamage);
 	
 	bUseVelocityChange = true;
 	MovementForce = 1000;
@@ -61,4 +65,12 @@ void ASTrackerBot::Tick(float DeltaTime)
 	{
 		NextPathPoint = GetNextPathPoint();
 	}
+}
+
+void ASTrackerBot::HandleTakeDamage(USHealthComponent* SourceHealthComponent, float Health, float HealthDelta)
+{
+	// explode on death!
+
+	UE_LOG(LogTemp, Log, TEXT("Health %f of %s"), Health, *GetName());
+
 }
