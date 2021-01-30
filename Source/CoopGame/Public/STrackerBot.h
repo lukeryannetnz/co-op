@@ -43,6 +43,8 @@ protected:
 	UFUNCTION()
 	void HandleTakeDamage(USHealthComponent* SourceHealthComponent, float Health, float HealthDelta);
 
+	UMaterialInstanceDynamic* MaterialInstance;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

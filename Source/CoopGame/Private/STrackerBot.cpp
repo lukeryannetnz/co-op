@@ -19,9 +19,9 @@ ASTrackerBot::ASTrackerBot()
 
 	HealthComp = CreateDefaultSubobject<USHealthComponent>(TEXT("HealthComp"));
 	HealthComp->OnHealthChanged.AddDynamic(this, &ASTrackerBot::HandleTakeDamage);
-	
+
 	bUseVelocityChange = true;
-	MovementForce = 1000;
+	MovementForce = 500;
 	RequiredDistanceToTarget = 100;
 }
 
@@ -30,13 +30,13 @@ void ASTrackerBot::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	NextPathPoint = GetNextPathPoint();
 }
 
 FVector ASTrackerBot::GetNextPathPoint()
 {
 	ACharacter *PlayerPawn = UGameplayStatics::GetPlayerCharacter(this, 0);
 	UNavigationPath* NavPath = UNavigationSystemV1::FindPathToActorSynchronously(this, GetActorLocation(), PlayerPawn);
-	// UNavigationPath* NavPath = UNavigationSystemV1::FindPathToActorSynchronously(GetWorld(), GetActorLocation(), this, 0.0f, GetPlayerController(), nullptr);
 
 	if(NavPath->PathPoints.Num() > 1)
 	{
@@ -70,6 +70,16 @@ void ASTrackerBot::Tick(float DeltaTime)
 void ASTrackerBot::HandleTakeDamage(USHealthComponent* SourceHealthComponent, float Health, float HealthDelta)
 {
 	// explode on death!
+
+	if(MaterialInstance == nullptr)
+	{
+		MaterialInstance = MeshComp->CreateAndSetMaterialInstanceDynamicFromMaterial(0, MeshComp->GetMaterial(0));
+	}
+
+	if(MaterialInstance)
+	{
+		MaterialInstance->SetScalarParameterValue("LastTimeDamageTaken", GetWorld()->TimeSeconds);
+	}
 
 	UE_LOG(LogTemp, Log, TEXT("Health %f of %s"), Health, *GetName());
 
