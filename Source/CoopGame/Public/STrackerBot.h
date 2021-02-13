@@ -6,7 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "STrackerBot.generated.h"
 
- class USHealthComponent;
+class USHealthComponent;
+class USphereComponent;
+struct FTimerHandle;
 
 UCLASS()
 class COOPGAME_API ASTrackerBot : public APawn
@@ -26,6 +28,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Components")
 	USHealthComponent* HealthComp;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Components")
+	USphereComponent* SphereComp;
 
 	FVector GetNextPathPoint();
 
@@ -58,8 +63,16 @@ protected:
 
 	bool bExploded;
 
+	bool bStartedSelfDestruction;
+
+	FTimerHandle TimerHandle_SelfDamage;
+
+	void DamageSelf();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 };

@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "SHealthComponent.h"
 #include "Engine/Public/DrawDebugHelpers.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 ASTrackerBot::ASTrackerBot()
@@ -20,6 +21,14 @@ ASTrackerBot::ASTrackerBot()
 
 	HealthComp = CreateDefaultSubobject<USHealthComponent>(TEXT("HealthComp"));
 	HealthComp->OnHealthChanged.AddDynamic(this, &ASTrackerBot::HandleTakeDamage);
+
+	SphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
+
+	SphereComp->SetSphereRadius(200);
+	SphereComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	SphereComp->SetCollisionResponseToAllChannels(ECR_Ignore);
+	SphereComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	SphereComp->SetupAttachment(RootComponent);
 
 	bUseVelocityChange = true;
 	MovementForce = 500;
@@ -112,4 +121,25 @@ void ASTrackerBot::HandleTakeDamage(USHealthComponent* SourceHealthComponent, fl
 		SelfDestruct();
 	}
 
+}
+
+void ASTrackerBot::NotifyActorBeginOverlap(AActor* OtherActor)
+{
+	if(bStartedSelfDestruction)
+	{
+		return;
+	}
+
+	ACharacter* PlayerPawn = Cast<ACharacter>(OtherActor);
+	if(PlayerPawn)
+	{
+		GetWorldTimerManager().SetTimer(TimerHandle_SelfDamage, this, &ASTrackerBot::DamageSelf, 0.5f, true, 0.0f);
+
+		bStartedSelfDestruction = true;
+	}
+}
+
+void ASTrackerBot::DamageSelf()
+{
+	UGameplayStatics::ApplyDamage(this, 20, GetInstigatorController(), this, nullptr);
 }
