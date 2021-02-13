@@ -6,7 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "STrackerBot.generated.h"
 
-class USHealthComponent;
+ class USHealthComponent;
 
 UCLASS()
 class COOPGAME_API ASTrackerBot : public APawn
@@ -44,6 +44,19 @@ protected:
 	void HandleTakeDamage(USHealthComponent* SourceHealthComponent, float Health, float HealthDelta);
 
 	UMaterialInstanceDynamic* MaterialInstance;
+
+	void SelfDestruct();
+
+	UPROPERTY(EditDefaultsOnly, Category = "TrackerBot")
+	UParticleSystem* ExplosionEffect;
+
+	UPROPERTY(EditDefaultsOnly, Category = "TrackerBot")
+	float ExplosionRadius;
+
+	UPROPERTY(EditDefaultsOnly, Category = "TrackerBot")
+	float ExplosionDamage;
+
+	bool bExploded;
 
 public:	
 	// Called every frame

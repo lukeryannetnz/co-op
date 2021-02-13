@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 #include "SHealthComponent.h"
+#include "Engine/Public/DrawDebugHelpers.h"
 
 // Sets default values
 ASTrackerBot::ASTrackerBot()
@@ -23,6 +24,9 @@ ASTrackerBot::ASTrackerBot()
 	bUseVelocityChange = true;
 	MovementForce = 500;
 	RequiredDistanceToTarget = 100;
+
+	ExplosionRadius = 200;
+	ExplosionDamage = 40;
 }
 
 // Called when the game starts or when spawned
@@ -44,6 +48,27 @@ FVector ASTrackerBot::GetNextPathPoint()
 	}
 
 	return GetActorLocation();
+}
+
+void ASTrackerBot::SelfDestruct()
+{
+	if(bExploded)
+	{
+		return;
+	}
+
+	bExploded = true;
+
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionEffect, GetActorLocation());
+
+	TArray<AActor*> IgnoredActors;
+	IgnoredActors.Add(this);
+
+	UGameplayStatics::ApplyRadialDamage(this, ExplosionDamage, GetActorLocation(), ExplosionRadius, nullptr, IgnoredActors, this, GetInstigatorController(), true);
+
+	DrawDebugSphere(GetWorld(), GetActorLocation(), ExplosionRadius, 12, FColor::Silver, false, 2.0f, 0, 1.0f);
+
+	Destroy();
 }
 
 // Called every frame
@@ -69,8 +94,6 @@ void ASTrackerBot::Tick(float DeltaTime)
 
 void ASTrackerBot::HandleTakeDamage(USHealthComponent* SourceHealthComponent, float Health, float HealthDelta)
 {
-	// explode on death!
-
 	if(MaterialInstance == nullptr)
 	{
 		MaterialInstance = MeshComp->CreateAndSetMaterialInstanceDynamicFromMaterial(0, MeshComp->GetMaterial(0));
@@ -82,5 +105,11 @@ void ASTrackerBot::HandleTakeDamage(USHealthComponent* SourceHealthComponent, fl
 	}
 
 	UE_LOG(LogTemp, Log, TEXT("Health %f of %s"), Health, *GetName());
+
+		// explode on death!
+	if(Health <= 0.0f)
+	{
+		SelfDestruct();
+	}
 
 }
