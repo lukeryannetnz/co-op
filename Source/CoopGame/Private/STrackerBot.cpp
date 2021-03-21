@@ -43,8 +43,11 @@ ASTrackerBot::ASTrackerBot()
 void ASTrackerBot::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	NextPathPoint = GetNextPathPoint();
+
+	if(Role == ROLE_Authority)
+	{
+		NextPathPoint = GetNextPathPoint();
+	}
 }
 
 FVector ASTrackerBot::GetNextPathPoint()
@@ -71,16 +74,23 @@ void ASTrackerBot::SelfDestruct()
 
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionEffect, GetActorLocation());
 
-	TArray<AActor*> IgnoredActors;
-	IgnoredActors.Add(this);
-
-	UGameplayStatics::ApplyRadialDamage(this, ExplosionDamage, GetActorLocation(), ExplosionRadius, nullptr, IgnoredActors, this, GetInstigatorController(), true);
-
-	DrawDebugSphere(GetWorld(), GetActorLocation(), ExplosionRadius, 12, FColor::Silver, false, 2.0f, 0, 1.0f);
-
-	Destroy();
-
 	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ExplodeSound, GetActorLocation());
+
+	MeshComp->SetVisibility(false, true);
+	MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
+	if(Role == ROLE_Authority)
+	{
+		TArray<AActor*> IgnoredActors;
+		IgnoredActors.Add(this);
+
+		UGameplayStatics::ApplyRadialDamage(this, ExplosionDamage, GetActorLocation(), ExplosionRadius, nullptr, IgnoredActors, this, GetInstigatorController(), true);
+
+		DrawDebugSphere(GetWorld(), GetActorLocation(), ExplosionRadius, 12, FColor::Silver, false, 2.0f, 0, 1.0f);
+
+		SetLifeSpan(2.0f);
+	}
+
 }
 
 // Called every frame
@@ -88,19 +98,22 @@ void ASTrackerBot::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	float DistanceToPathPoint = (GetActorLocation() - NextPathPoint).Size();
-
-	if(DistanceToPathPoint > RequiredDistanceToTarget)
+	if(Role == ROLE_Authority && !bExploded)
 	{
-		FVector ForceDirection = NextPathPoint - GetActorLocation();
-		ForceDirection.Normalize();
+		float DistanceToPathPoint = (GetActorLocation() - NextPathPoint).Size();
 
-		ForceDirection *= MovementForce;
-		MeshComp->AddForce(ForceDirection, NAME_None, bUseVelocityChange);
-	}
-	else
-	{
-		NextPathPoint = GetNextPathPoint();
+		if(DistanceToPathPoint > RequiredDistanceToTarget)
+		{
+			FVector ForceDirection = NextPathPoint - GetActorLocation();
+			ForceDirection.Normalize();
+
+			ForceDirection *= MovementForce;
+			MeshComp->AddForce(ForceDirection, NAME_None, bUseVelocityChange);
+		}
+		else
+		{
+			NextPathPoint = GetNextPathPoint();
+		}
 	}
 }
 
@@ -136,7 +149,10 @@ void ASTrackerBot::NotifyActorBeginOverlap(AActor* OtherActor)
 	ACharacter* PlayerPawn = Cast<ACharacter>(OtherActor);
 	if(PlayerPawn)
 	{
-		GetWorldTimerManager().SetTimer(TimerHandle_SelfDamage, this, &ASTrackerBot::DamageSelf, 0.5f, true, 0.0f);
+		if(Role == ROLE_Authority)
+		{
+			GetWorldTimerManager().SetTimer(TimerHandle_SelfDamage, this, &ASTrackerBot::DamageSelf, 0.5f, true, 0.0f);
+		}
 
 		bStartedSelfDestruction = true;
 

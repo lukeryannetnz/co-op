@@ -51,3 +51,9 @@ void USHealthComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	// Don't replicate back to owner as it has already played the fire animations.
 	DOREPLIFETIME(USHealthComponent, Health);
 }
+
+void USHealthComponent::OnRep_Health(float OldHealth)
+{
+	float Damage = Health - OldHealth;
+	OnHealthChanged.Broadcast(this, Health, Damage);
+}
