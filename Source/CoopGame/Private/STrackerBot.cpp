@@ -7,6 +7,7 @@
 #include "SHealthComponent.h"
 #include "Engine/Public/DrawDebugHelpers.h"
 #include "Components/SphereComponent.h"
+#include "Engine/Classes/Sound/SoundCue.h"
 
 // Sets default values
 ASTrackerBot::ASTrackerBot()
@@ -78,6 +79,8 @@ void ASTrackerBot::SelfDestruct()
 	DrawDebugSphere(GetWorld(), GetActorLocation(), ExplosionRadius, 12, FColor::Silver, false, 2.0f, 0, 1.0f);
 
 	Destroy();
+
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ExplodeSound, GetActorLocation());
 }
 
 // Called every frame
@@ -136,6 +139,8 @@ void ASTrackerBot::NotifyActorBeginOverlap(AActor* OtherActor)
 		GetWorldTimerManager().SetTimer(TimerHandle_SelfDamage, this, &ASTrackerBot::DamageSelf, 0.5f, true, 0.0f);
 
 		bStartedSelfDestruction = true;
+
+		UGameplayStatics::SpawnSoundAttached(SelfDestructSound, RootComponent);
 	}
 }
 
