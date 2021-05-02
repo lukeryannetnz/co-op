@@ -9,7 +9,6 @@
 #include "Components/SphereComponent.h"
 #include "Engine/Classes/Sound/SoundCue.h"
 
-// Sets default values
 ASTrackerBot::ASTrackerBot()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -25,7 +24,7 @@ ASTrackerBot::ASTrackerBot()
 
 	SphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
 
-	SphereComp->SetSphereRadius(200);
+	SphereComp->SetSphereRadius(500);
 	SphereComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SphereComp->SetCollisionResponseToAllChannels(ECR_Ignore);
 	SphereComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
@@ -44,9 +43,73 @@ void ASTrackerBot::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if(Role == ROLE_Authority)
+	if(GetLocalRole() == ROLE_Authority)
 	{
 		NextPathPoint = GetNextPathPoint();
+
+		AActor* Owner = GetOwner();
+		if(Owner != NULL)
+		{
+			UWorld* World = Owner->GetWorld();
+			if(World != NULL)
+			{
+				World->GetTimerManager().SetTimer(MemberTimerHandle, this, &ASTrackerBot::AdjustPowerLevel, 1.0f, true, 1.0f);
+			}
+		}
+	}
+}
+
+void ASTrackerBot::AdjustPowerLevel()
+{
+	// find objects which are near
+	TArray<FOverlapResult> Result;
+	AActor* Owner = GetOwner();
+	if(Owner != NULL)
+	{
+		UWorld* World = Owner->GetWorld();
+		if(World != NULL)
+		{
+			FCollisionObjectQueryParams* ObjectQueryParams = new FCollisionObjectQueryParams(FCollisionObjectQueryParams::AllObjects);
+			FCollisionShape CollisionShape;
+			CollisionShape.SetSphere(600.0f);
+
+			World->OverlapMultiByObjectType(Result, GetActorLocation(), FRotator(0.f, 0.f, 0.f).Quaternion(), *ObjectQueryParams, CollisionShape);
+		}
+	}
+
+	// filter down to other ASTrackerBots
+	int NearbyBotCount = 0;
+	for(FOverlapResult Overlap : Result)
+	{
+		ASTrackerBot* Bot = Cast<ASTrackerBot>(Overlap.GetActor());
+
+		if(Bot && Bot != this)
+		{
+			if(NearbyBotCount <= MaxPowerLevel)
+			{
+				NearbyBotCount++;
+			}
+		}
+	}	
+
+	// update the power level
+	PowerLevel = NearbyBotCount;
+
+	UE_LOG(LogTemp, Log, TEXT("PowerLevel %f of %s"), PowerLevel, *GetName());
+
+	// update the material variable "PowerLevelAlpha"
+	if(MaterialInstance == nullptr)
+	{
+		MaterialInstance = MeshComp->CreateAndSetMaterialInstanceDynamicFromMaterial(0, MeshComp->GetMaterial(0));
+	}
+
+	if(MaterialInstance)
+	{
+		// The material will glow red when PowerLevelAlpha is >0
+
+		float alpha = PowerLevel / (float) MaxPowerLevel;
+		UE_LOG(LogTemp, Log, TEXT("Setting PowerLevelAlpha of %f for %s"), PowerLevel, *GetName());
+		MaterialInstance->SetScalarParameterValue("PowerLevelAlpha", alpha);
 	}
 }
 
@@ -79,12 +142,12 @@ void ASTrackerBot::SelfDestruct()
 	MeshComp->SetVisibility(false, true);
 	MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	
-	if(Role == ROLE_Authority)
+	if(GetLocalRole() == ROLE_Authority)
 	{
 		TArray<AActor*> IgnoredActors;
 		IgnoredActors.Add(this);
 
-		UGameplayStatics::ApplyRadialDamage(this, ExplosionDamage, GetActorLocation(), ExplosionRadius, nullptr, IgnoredActors, this, GetInstigatorController(), true);
+		UGameplayStatics::ApplyRadialDamage(this, ExplosionDamage + (PowerLevel * 2), GetActorLocation(), ExplosionRadius, nullptr, IgnoredActors, this, GetInstigatorController(), true);
 
 		DrawDebugSphere(GetWorld(), GetActorLocation(), ExplosionRadius, 12, FColor::Silver, false, 2.0f, 0, 1.0f);
 
@@ -98,7 +161,7 @@ void ASTrackerBot::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(Role == ROLE_Authority && !bExploded)
+	if(GetLocalRole() == ROLE_Authority && !bExploded)
 	{
 		float DistanceToPathPoint = (GetActorLocation() - NextPathPoint).Size();
 
@@ -149,7 +212,7 @@ void ASTrackerBot::NotifyActorBeginOverlap(AActor* OtherActor)
 	ACharacter* PlayerPawn = Cast<ACharacter>(OtherActor);
 	if(PlayerPawn)
 	{
-		if(Role == ROLE_Authority)
+		if(GetLocalRole() == ROLE_Authority)
 		{
 			GetWorldTimerManager().SetTimer(TimerHandle_SelfDamage, this, &ASTrackerBot::DamageSelf, 0.5f, true, 0.0f);
 		}

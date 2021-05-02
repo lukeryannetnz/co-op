@@ -76,10 +76,23 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "TrackerBot")
 	USoundCue* ExplodeSound;
 
+	/*
+		Adjusts the power level according to the number of AI who are nearby.
+	*/
+	void AdjustPowerLevel();
+
+	UPROPERTY(EditDefaultsOnly, Category = "TrackerBot")
+	int MaxPowerLevel = 10;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
+private:	
+	
+	FTimerHandle MemberTimerHandle;
+
+	float PowerLevel;
 };
