@@ -204,6 +204,8 @@ void ASTrackerBot::HandleTakeDamage(USHealthComponent* SourceHealthComponent, fl
 
 void ASTrackerBot::NotifyActorBeginOverlap(AActor* OtherActor)
 {
+	Super::NotifyActorBeginOverlap(OtherActor);
+	
 	if(bStartedSelfDestruction)
 	{
 		return;
