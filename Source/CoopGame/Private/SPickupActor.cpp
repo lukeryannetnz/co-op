@@ -19,6 +19,7 @@ ASPickupActor::ASPickupActor()
 	DecalComp->DecalSize = FVector(64, 75, 75);
 	DecalComp->SetupAttachment(SphereComp);
 
+	SetReplicates(true);
 }
 
 // Called when the game starts or when spawned
@@ -26,7 +27,11 @@ void ASPickupActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	Respawn();
+	// only spawn on the server
+	if(GetLocalRole() == ROLE_Authority)
+	{
+		Respawn();
+	}
 }
 
 void ASPickupActor::Respawn()
@@ -46,7 +51,8 @@ void ASPickupActor::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorBeginOverlap(OtherActor);
 
-	if(PowerupInstance)
+	// only activate on the server
+	if((GetLocalRole() == ROLE_Authority) && PowerupInstance)
 	{
 		PowerupInstance->ActivatePowerup();
 		PowerupInstance = nullptr;
