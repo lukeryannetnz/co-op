@@ -10,6 +10,8 @@ USHealthComponent::USHealthComponent()
 
 	DefaultHealth = 100;
 
+	RegenerateHealthIncrement = 5;
+
 	SetIsReplicated(true);
 }
 
@@ -39,8 +41,6 @@ void USHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, 
 
 	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
 
-	UE_LOG(LogTemp, Log, TEXT("Health changed: %f"), Health);
-
 	OnHealthChanged.Broadcast(this, Health, Damage);
 }
 
@@ -56,4 +56,17 @@ void USHealthComponent::OnRep_Health(float OldHealth)
 {
 	float Damage = Health - OldHealth;
 	OnHealthChanged.Broadcast(this, Health, Damage);
+}
+
+void USHealthComponent::RegenerateHealth()
+{
+	if(Health == 0.0f)
+	{
+		// already dead!
+		return;
+	}
+
+	Health = FMath::Clamp(Health + RegenerateHealthIncrement, 0.0f, DefaultHealth);
+
+	OnHealthChanged.Broadcast(this, Health, -RegenerateHealthIncrement);
 }

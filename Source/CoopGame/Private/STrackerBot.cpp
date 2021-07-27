@@ -192,9 +192,7 @@ void ASTrackerBot::HandleTakeDamage(USHealthComponent* SourceHealthComponent, fl
 		MaterialInstance->SetScalarParameterValue("LastTimeDamageTaken", GetWorld()->TimeSeconds);
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("Health %f of %s"), Health, *GetName());
-
-		// explode on death!
+	// explode on death!
 	if(Health <= 0.0f)
 	{
 		SelfDestruct();

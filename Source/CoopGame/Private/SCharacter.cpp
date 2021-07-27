@@ -153,6 +153,8 @@ void ASCharacter::StopFire()
 
 void ASCharacter::HandleHealthChanged(USHealthComponent* SourceHealthComponent, float Health, float HealthDelta)
 {
+	UE_LOG(LogTemp, Log, TEXT("Health %f of %s"), Health, *GetName());
+	
 	if(Health <= 0.0f)
 	{
 		// die!

@@ -33,8 +33,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthComponent")
 	float DefaultHealth;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthComponent")
+	float RegenerateHealthIncrement;
+
 	UFUNCTION()
 	void HandleTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+
+	UFUNCTION(BlueprintCallable, Category = "HealthComponent")
+	void RegenerateHealth();
 
 public:	
 		
