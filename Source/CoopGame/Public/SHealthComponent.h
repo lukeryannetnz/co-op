@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "SGameMode.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "SHealthComponent.generated.h"
@@ -21,6 +22,8 @@ public:
 	FOnHealthChangedSignature OnHealthChanged;
 
 protected:
+	bool bIsDead;
+
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	

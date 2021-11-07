@@ -17,7 +17,7 @@ void ASGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 
 void ASGameState::SetWaveState(EWaveState NewState)
 {
-    if(Role == ROLE_Authority)
+    if(GetLocalRole() == ROLE_Authority)
     {
         EWaveState old = WaveState;
         WaveState = NewState;

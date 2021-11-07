@@ -12,6 +12,8 @@ USHealthComponent::USHealthComponent()
 
 	RegenerateHealthIncrement = 5;
 
+	bIsDead = false;
+
 	SetIsReplicated(true);
 }
 
@@ -39,7 +41,7 @@ float USHealthComponent::GetHealth() const
 
 void USHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
-	if(Damage <= 0.0f)
+	if(Damage <= 0.0f || bIsDead)
 	{
 		return;
 	}
@@ -47,6 +49,18 @@ void USHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, 
 	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
 
 	OnHealthChanged.Broadcast(this, Health, Damage);
+
+	bIsDead = Health <= 0.0f;
+
+	if(bIsDead)
+	{
+		ASGameMode* GameMode = Cast<ASGameMode>(GetWorld()->GetAuthGameMode());
+		if(GameMode)
+		{
+			GameMode->OnActorKilled.Broadcast(DamagedActor, DamageCauser);
+		}
+	}
+	
 }
 
 void USHealthComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
