@@ -43,5 +43,7 @@ protected:
 	void RegenerateHealth();
 
 public:	
+
+	float GetHealth() const;
 		
 };

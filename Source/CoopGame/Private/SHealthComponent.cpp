@@ -32,6 +32,11 @@ void USHealthComponent::BeginPlay()
 	Health = DefaultHealth;
 }
 
+float USHealthComponent::GetHealth() const
+{
+	return Health;
+}
+
 void USHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
 	if(Damage <= 0.0f)

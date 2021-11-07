@@ -18,6 +18,8 @@ protected:
 
 	FTimerHandle TimerHandle_BotSpawner;
  
+	FTimerHandle TimerHandle_NextWaveStart;
+
 	int NumberOfBotsToSpawn;
 
 	int WaveCount;
@@ -36,9 +38,13 @@ protected:
 
 	void PrepareForNextWave();
 
+	void CheckWaveState();
+
 public:
 
 	ASGameMode();
 
 	virtual void StartPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
 };
