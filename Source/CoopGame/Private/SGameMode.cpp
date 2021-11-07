@@ -32,6 +32,7 @@ void ASGameMode::StartWave()
 
     GetWorldTimerManager().SetTimer(TimerHandle_BotSpawner, this, &ASGameMode::SpawnBotTimerElapsed, 1.0f, true, 0.0f);
 
+    SetWaveState(EWaveState::WaveInProgress);
 }
 
 void ASGameMode::SpawnBotTimerElapsed()
@@ -61,7 +62,7 @@ void ASGameMode::EndWave()
     GetWorldTimerManager().ClearTimer(TimerHandle_BotSpawner);
 
     UE_LOG(LogTemp, Log, TEXT("Ending wave"));
-
+    SetWaveState(EWaveState::WaitingToComplete); 
 }
 
 void ASGameMode::CheckWaveState()
@@ -95,6 +96,8 @@ void ASGameMode::CheckWaveState()
 
     if(!isAnyBotAlive)
     {
+        SetWaveState(EWaveState::WaveComplete);
+
         PrepareForNextWave();
     }
 }
@@ -123,12 +126,16 @@ void ASGameMode::GameOver()
 {
     EndWave();
 
+    SetWaveState(EWaveState::GaveOver);
+
     UE_LOG(LogTemp, Log, TEXT("GameOver!"));
 }
 
 void ASGameMode::PrepareForNextWave()
 {
     UE_LOG(LogTemp, Log, TEXT("Preparing for next wave"));
+
+    SetWaveState(EWaveState::WaitingToStart);
 
     GetWorldTimerManager().SetTimer(TimerHandle_NextWaveStart, this, &ASGameMode::StartWave, TimeBetweenWaves, false);
 }
@@ -139,6 +146,6 @@ void ASGameMode::SetWaveState(EWaveState NewState)
 
     if(GameState)
     {
-        GameState->WaveState = NewState;
+        GameState->SetWaveState(NewState);
     }
 }
