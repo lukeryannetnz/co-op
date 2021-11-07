@@ -2,9 +2,13 @@
 
 #pragma once
 
+#include "SGameState.h"
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "SGameMode.generated.h"
+
+
+enum class EWaveState : uint8;
 
 /**
  * 
@@ -43,6 +47,8 @@ protected:
 	void CheckAnyPlayerAlive();
 
 	void GameOver();
+
+	void SetWaveState(EWaveState NewState);
 
 public:
 

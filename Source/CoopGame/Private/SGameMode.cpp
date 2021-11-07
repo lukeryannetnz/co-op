@@ -1,13 +1,16 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+///
+/// Game mode. Controls the game, only exists on the server - no instances on the clients so can't be replicated. 
+/// For this reason it interacts with the replicated GameState class.
+///
 
 #include "SGameMode.h"
 #include "SHealthComponent.h"
 
-
 ASGameMode::ASGameMode()
 {
     TimeBetweenWaves = 2.0f;
+
+    GameStateClass = ASGameState::StaticClass();
 
     PrimaryActorTick.bCanEverTick = true;
     PrimaryActorTick.TickInterval = 1.0f;
@@ -128,4 +131,14 @@ void ASGameMode::PrepareForNextWave()
     UE_LOG(LogTemp, Log, TEXT("Preparing for next wave"));
 
     GetWorldTimerManager().SetTimer(TimerHandle_NextWaveStart, this, &ASGameMode::StartWave, TimeBetweenWaves, false);
+}
+
+void ASGameMode::SetWaveState(EWaveState NewState)
+{
+    ASGameState* GameState = GetGameState<ASGameState>();
+
+    if(GameState)
+    {
+        GameState->WaveState = NewState;
+    }
 }
