@@ -161,6 +161,7 @@ void ASGameMode::RestartDeadPlayers()
         APlayerController* PC = It->Get();
         if(PC && PC->GetPawn() == nullptr)
         {
+            UE_LOG(LogTemp, Log, TEXT("Restarting player."));
             RestartPlayer(PC);
         }
     }
