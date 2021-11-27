@@ -14,6 +14,8 @@ USHealthComponent::USHealthComponent()
 
 	bIsDead = false;
 
+	TeamNumber = 255;
+
 	SetIsReplicated(true);
 }
 
@@ -43,6 +45,13 @@ void USHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, 
 {
 	if(Damage <= 0.0f || bIsDead)
 	{
+		return;
+	}
+
+	if(IsFriendly(DamagedActor, DamageCauser))
+	{
+		UE_LOG(LogTemp, Log, TEXT("Same team so not applying damage."));
+
 		return;
 	}
 
@@ -88,4 +97,33 @@ void USHealthComponent::RegenerateHealth()
 	Health = FMath::Clamp(Health + RegenerateHealthIncrement, 0.0f, DefaultHealth);
 
 	OnHealthChanged.Broadcast(this, Health, -RegenerateHealthIncrement);
+}
+
+bool USHealthComponent::IsFriendly(AActor* ActorA, AActor* ActorB)
+{
+	if(ActorA == nullptr || ActorB == nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Null actor so assuming friendly."));
+		return true;
+	}
+
+	if(ActorA == ActorB)
+	{
+		// allow self damage
+		UE_LOG(LogTemp, Log, TEXT("Same actor so returning not friendly."));
+		return false;
+	}
+
+	USHealthComponent* HealthCompA = Cast<USHealthComponent>(ActorA->GetComponentByClass(USHealthComponent::StaticClass()));
+	USHealthComponent* HealthCompB = Cast<USHealthComponent>(ActorB->GetComponentByClass(USHealthComponent::StaticClass()));
+
+	if(HealthCompA == nullptr || HealthCompB == nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Null health comp so assuming friendly."));
+		return true;
+	}
+
+	UE_LOG(LogTemp, Log, TEXT("Team A: %i Team B: %i"), HealthCompA->TeamNumber, HealthCompB->TeamNumber);
+
+	return HealthCompA->TeamNumber == HealthCompB->TeamNumber;
 }

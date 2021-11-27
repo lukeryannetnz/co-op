@@ -66,8 +66,10 @@ protected:
 
 	void EndZoom();
 
+	UFUNCTION(BlueprintCallable, Category = "Player")
 	void StartFire();
 
+	UFUNCTION(BlueprintCallable, Category = "Player")
 	void StopFire();
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Player")

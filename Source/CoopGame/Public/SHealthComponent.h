@@ -21,6 +21,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnHealthChangedSignature OnHealthChanged;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "HealthComponent")
+	uint8 TeamNumber;
+
 protected:
 	bool bIsDead;
 
@@ -44,6 +47,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "HealthComponent")
 	void RegenerateHealth();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "HealthComponent")
+	static bool IsFriendly(AActor* ActorA, AActor* ActorB);
 
 public:	
 

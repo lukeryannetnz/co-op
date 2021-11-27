@@ -85,6 +85,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	float BaseDamage;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float BulletSpreadDegrees;
+
 	float ActualDamage;
 
 	UPROPERTY(ReplicatedUsing=OnRep_HitScanTrace)

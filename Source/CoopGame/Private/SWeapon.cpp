@@ -35,6 +35,7 @@ ASWeapon::ASWeapon()
 
 	NetUpdateFrequency = 66.0f;
 	MinNetUpdateFrequency = 33.0f;
+	BulletSpreadDegrees = 1.0f;
 }
 
 void ASWeapon::BeginPlay()
@@ -85,6 +86,10 @@ void ASWeapon::Fire()
 	Owner->GetActorEyesViewPoint(EyesLocation, EyesRotation);
 	FVector ShotDirection = EyesRotation.Vector();
 
+	// Spread bullets
+	float HalfRad = FMath::DegreesToRadians(BulletSpreadDegrees);
+	ShotDirection = FMath::VRandCone(ShotDirection, HalfRad, HalfRad);
+
 	// trace from the eyes to a point in the distance, caluclated by taking the direction 
 	// of gaze (rotation) and multipling it by a large constant
 	FVector LineTraceEnd = EyesLocation + (ShotDirection * 10000);
@@ -109,7 +114,7 @@ void ASWeapon::Fire()
 			ActualDamage *= 4.0f;
 		}
 
-		UGameplayStatics::ApplyPointDamage(Hit.GetActor(), ActualDamage, ShotDirection, Hit, Owner->GetInstigatorController(), this, DamageType);
+		UGameplayStatics::ApplyPointDamage(Hit.GetActor(), ActualDamage, ShotDirection, Hit, Owner->GetInstigatorController(), Owner, DamageType);
 		UE_LOG(LogTemp, Log, TEXT("Damage applied: %f"), ActualDamage);
 		ApplyImpactEvent(Hit.ImpactPoint, Surface);
 
